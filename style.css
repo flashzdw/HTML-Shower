@@ -75,7 +75,7 @@ body {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 16px;
-  font-size: 14px;
+  font-size: 16px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   line-height: 1.5;
   resize: none; /* 移动端不需要缩放手柄 */
@@ -131,6 +131,7 @@ body {
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
   text-align: center;
   white-space: nowrap; /* 绝对禁止文字换行堆叠 */
 }
