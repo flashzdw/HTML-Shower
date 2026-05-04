@@ -1,104 +1,198 @@
+:root {
+  --bg-color: #f9fafb;
+  --surface-color: #ffffff;
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --primary-color: #0f172a;
+  --primary-hover: #1e293b;
+  --border-color: #e5e7eb;
+  --btn-secondary-bg: #f3f4f6;
+  --btn-secondary-hover: #e5e7eb;
+  
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #f5f7fb;
-  color: #1f2937;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+  background: var(--bg-color);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
 }
 
 .app {
-  max-width: 720px;
+  max-width: 600px;
   margin: 0 auto;
-  padding: 16px 16px 32px;
+  padding: 24px 20px 40px;
+}
+
+.hero {
+  margin-bottom: 24px;
+  padding: 0 4px;
 }
 
 .hero h1 {
-  margin-bottom: 8px;
+  margin: 0 0 8px 0;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .hero p {
-  margin-top: 0;
+  margin: 0;
+  font-size: 15px;
   line-height: 1.5;
-  color: #4b5563;
+  color: var(--text-muted);
 }
 
 .editor-panel,
 .preview-panel {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 16px;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  background: var(--surface-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(0,0,0,0.02);
 }
 
 .field-label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
   font-weight: 600;
+  color: var(--text-main);
 }
 
 .html-input {
   width: 100%;
-  min-height: 320px;
+  min-height: 350px;
   box-sizing: border-box;
-  border: 1px solid #d0d7e2;
-  border-radius: 16px;
-  padding: 14px;
-  font-size: 16px;
-  line-height: 1.5;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  font-size: 15px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  line-height: 1.6;
   resize: vertical;
+  background: var(--bg-color);
+  color: var(--text-main);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.html-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
 }
 
 .actions {
   display: flex;
   gap: 12px;
-  margin-top: 12px;
+  margin-top: 16px;
 }
 
 .preview-panel {
-  margin-top: 16px;
+  margin-top: 20px;
 }
 
 .preview-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
   gap: 12px;
+}
+
+.preview-toolbar h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .preview-actions {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 #preview-frame {
   width: 100%;
-  min-height: 360px;
-  border: 1px solid #d0d7e2;
-  border-radius: 16px;
+  min-height: 450px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
   background: #ffffff;
+  display: block;
 }
 
 .actions button,
 .preview-toolbar button {
   border: 0;
-  border-radius: 999px;
-  padding: 12px 18px;
+  border-radius: var(--radius-full);
+  padding: 14px 20px;
   font-size: 15px;
   font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.actions button {
+  flex: 1; /* 让编辑区的按钮等宽铺满 */
 }
 
 #preview-button {
-  background: #2563eb;
+  background: var(--primary-color);
   color: #ffffff;
+}
+
+#preview-button:active {
+  background: var(--primary-hover);
+  transform: scale(0.98);
 }
 
 #clear-button,
 #fullscreen-button,
 #preview-clear-button,
 #back-button {
-  background: #e5e7eb;
-  color: #111827;
+  background: var(--btn-secondary-bg);
+  color: var(--text-main);
+}
+
+#clear-button:active,
+#fullscreen-button:active,
+#preview-clear-button:active,
+#back-button:active {
+  background: var(--btn-secondary-hover);
+  transform: scale(0.98);
+}
+
+/* 预览工具栏按钮稍微小一点，适合紧凑排布 */
+.preview-toolbar button {
+  padding: 10px 16px;
+  font-size: 14px;
+}
+
+.install-panel {
+  margin-top: 32px;
+  padding: 0 4px;
+}
+
+.install-panel h2 {
+  font-size: 16px;
+  margin: 0 0 8px 0;
+}
+
+.install-panel p {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  color: var(--text-muted);
 }
 
 body[data-view="editor"] .preview-panel {
@@ -113,6 +207,7 @@ body[data-view="preview"] .preview-panel {
   display: block;
 }
 
+/* 全屏模式优化 */
 body[data-preview-mode="fullscreen"] {
   overflow: hidden;
 }
@@ -123,18 +218,30 @@ body[data-preview-mode="fullscreen"] .preview-panel {
   z-index: 1000;
   margin-top: 0;
   border-radius: 0;
-  padding: 12px;
+  padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
+  background: var(--surface-color);
+  box-shadow: none;
+  border: none;
 }
 
 body[data-preview-mode="fullscreen"] .preview-toolbar {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  padding-top: env(safe-area-inset-top);
 }
 
 body[data-preview-mode="fullscreen"] #preview-frame {
   min-height: 0;
   height: 100%;
   flex: 1;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
+  border-color: var(--border-color);
+}
+
+/* 在 PWA standalone 模式下隐藏安装提示 */
+@media all and (display-mode: standalone) {
+  .install-panel {
+    display: none;
+  }
 }
