@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111827" />
+    <title>HTML 预览器</title>
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body data-view="editor">
+    <main class="app">
+      <header class="hero">
+        <h1>HTML 预览器</h1>
+        <p>复制 AI 生成的 HTML，粘贴后即可在手机上预览。</p>
+      </header>
+
+      <section class="editor-panel">
+        <label class="field-label" for="html-input">HTML 输入框</label>
+        <textarea
+          id="html-input"
+          class="html-input"
+          placeholder="请粘贴完整 HTML 代码"
+        ></textarea>
+        <div class="actions">
+          <button id="preview-button" type="button">预览</button>
+          <button id="clear-button" type="button">清空</button>
+        </div>
+      </section>
+
+      <section class="preview-panel">
+        <div class="preview-toolbar">
+          <h2>预览结果</h2>
+          <div class="preview-actions">
+            <button id="preview-clear-button" type="button">清空</button>
+            <button id="back-button" type="button">返回编辑</button>
+          </div>
+        </div>
+        <iframe
+          id="preview-frame"
+          title="HTML 预览结果"
+          sandbox="allow-scripts"
+        ></iframe>
+      </section>
+
+      <section class="install-panel" aria-label="安装说明">
+        <h2>添加到主屏幕</h2>
+        <p>Android 建议使用浏览器的安装或添加到主屏幕功能。</p>
+        <p>iPhone 请在 Safari 分享菜单中选择“添加到主屏幕”。</p>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

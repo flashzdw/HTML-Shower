@@ -1,0 +1,220 @@
+:root {
+  --bg-color: #f9fafb;
+  --surface-color: #ffffff;
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --primary-color: #0f172a;
+  --primary-hover: #1e293b;
+  --border-color: #e5e7eb;
+  --btn-secondary-bg: #f3f4f6;
+  --btn-secondary-hover: #e5e7eb;
+  
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-full: 9999px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+  background: var(--bg-color);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  /* 纯手机端布局：占满视口，禁止 body 滚动 */
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.app {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.hero {
+  padding: 0 4px 12px;
+  flex-shrink: 0;
+}
+
+.hero h1 {
+  margin: 0 0 4px 0;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.hero p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+.editor-panel,
+.preview-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* 让内部子元素可以缩放 */
+}
+
+.field-label {
+  display: none; /* 移动端省略标签，靠 placeholder 提示 */
+}
+
+.html-input {
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  font-size: 14px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  line-height: 1.5;
+  resize: none; /* 移动端不需要缩放手柄 */
+  background: var(--surface-color);
+  color: var(--text-main);
+  margin-bottom: 16px;
+  -webkit-appearance: none;
+}
+
+.html-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.actions {
+  flex-shrink: 0;
+  display: flex;
+  gap: 12px;
+}
+
+/* 预览工具栏：避免按钮和文字在小屏堆叠 */
+.preview-toolbar {
+  flex-shrink: 0;
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.preview-toolbar h2 {
+  display: none; /* 隐藏 "预览结果" 标题，给操作按钮让出空间 */
+}
+
+.preview-actions {
+  display: flex;
+  gap: 8px;
+  width: 100%; /* 占满整行 */
+}
+
+#preview-frame {
+  flex: 1;
+  width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  display: block;
+  min-height: 0; /* 允许在 flex 容器中收缩 */
+}
+
+.actions button,
+.preview-actions button {
+  border: 0;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  text-align: center;
+  white-space: nowrap; /* 绝对禁止文字换行堆叠 */
+}
+
+.actions button {
+  flex: 1;
+  padding: 16px 0;
+  font-size: 16px;
+}
+
+/* 预览界面的三个按钮等宽排布 */
+.preview-actions button {
+  flex: 1;
+  padding: 14px 0;
+  font-size: 14px;
+}
+
+#preview-button {
+  background: var(--primary-color);
+  color: #ffffff;
+  flex: 2; /* 让预览按钮在编辑区更宽更明显 */
+}
+
+#clear-button,
+#fullscreen-button,
+#preview-clear-button,
+#back-button {
+  background: var(--btn-secondary-bg);
+  color: var(--text-main);
+}
+
+.install-panel {
+  flex-shrink: 0;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.install-panel h2 {
+  font-size: 14px;
+  margin: 0 0 4px 0;
+}
+
+.install-panel p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* 视图切换逻辑 */
+body[data-view="editor"] .preview-panel {
+  display: none;
+}
+
+/* 预览模式下隐藏其他所有模块，最大化 iframe 空间，直接全屏覆盖 */
+body[data-view="preview"] .editor-panel,
+body[data-view="preview"] .hero,
+body[data-view="preview"] .install-panel {
+  display: none; 
+}
+
+body[data-view="preview"] .app {
+  padding: 0;
+}
+
+body[data-view="preview"] .preview-panel {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  margin-top: 0;
+  padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom));
+  background: var(--bg-color);
+  border-radius: 0;
+}
+
+body[data-view="preview"] #preview-frame {
+  border-radius: 0;
+  border: none;
+  border-top: 1px solid var(--border-color);
+}
+
+/* 在 PWA standalone 模式下隐藏安装提示 */
+@media all and (display-mode: standalone) {
+  .install-panel {
+    display: none;
+  }
+}
