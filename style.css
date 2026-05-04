@@ -94,6 +94,7 @@ body {
 }
 
 #clear-button,
+#fullscreen-button,
 #preview-clear-button,
 #back-button {
   background: #e5e7eb;
@@ -110,4 +111,30 @@ body[data-view="preview"] .editor-panel {
 
 body[data-view="preview"] .preview-panel {
   display: block;
+}
+
+body[data-preview-mode="fullscreen"] {
+  overflow: hidden;
+}
+
+body[data-preview-mode="fullscreen"] .preview-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  margin-top: 0;
+  border-radius: 0;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+body[data-preview-mode="fullscreen"] .preview-toolbar {
+  margin-bottom: 12px;
+}
+
+body[data-preview-mode="fullscreen"] #preview-frame {
+  min-height: 0;
+  height: 100%;
+  flex: 1;
+  border-radius: 12px;
 }

@@ -133,3 +133,19 @@ test("预览脚本可以在 iframe 内执行，但不能改写宿主页面标题
   await expect(frame.locator("body")).toHaveAttribute("data-parent-blocked", "yes");
   await expect(page).toHaveTitle("HTML 预览器");
 });
+
+test("点击全屏后进入页面内全屏，再次点击后退出全屏", async ({ page }) => {
+  await page.goto("/");
+
+  await page.getByLabel("HTML 输入框").fill("<p>全屏预览</p>");
+  await page.getByRole("button", { name: "预览" }).click();
+
+  await page.getByRole("button", { name: "全屏" }).click();
+  await expect(page.locator("body")).toHaveAttribute("data-preview-mode", "fullscreen");
+  await expect(page.locator("#fullscreen-button")).toHaveText("退出全屏");
+  await expect(page.locator(".preview-panel")).toHaveCSS("position", "fixed");
+
+  await page.getByRole("button", { name: "退出全屏" }).click();
+  await expect(page.locator("body")).toHaveAttribute("data-preview-mode", "default");
+  await expect(page.locator("#fullscreen-button")).toHaveText("全屏");
+});
