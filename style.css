@@ -184,23 +184,19 @@ body[data-view="editor"] .preview-panel {
   display: none;
 }
 
-/* 预览模式下隐藏其他所有模块，最大化 iframe 空间 */
+/* 预览模式下隐藏其他所有模块，最大化 iframe 空间，直接全屏覆盖 */
 body[data-view="preview"] .editor-panel,
 body[data-view="preview"] .hero,
 body[data-view="preview"] .install-panel {
   display: none; 
 }
 
-body[data-view="preview"] .preview-panel {
-  display: flex;
-}
-
-/* 全屏模式优化（移动端页面内全屏） */
-body[data-preview-mode="fullscreen"] .app {
+body[data-view="preview"] .app {
   padding: 0;
 }
 
-body[data-preview-mode="fullscreen"] .preview-panel {
+body[data-view="preview"] .preview-panel {
+  display: flex;
   position: fixed;
   inset: 0;
   z-index: 1000;
@@ -210,7 +206,7 @@ body[data-preview-mode="fullscreen"] .preview-panel {
   border-radius: 0;
 }
 
-body[data-preview-mode="fullscreen"] #preview-frame {
+body[data-view="preview"] #preview-frame {
   border-radius: 0;
   border: none;
   border-top: 1px solid var(--border-color);

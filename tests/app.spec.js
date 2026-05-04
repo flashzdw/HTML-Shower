@@ -45,17 +45,21 @@ test("点击清空后输入框与预览内容都会被重置", async ({ page }) 
   );
 });
 
-test("点击预览后进入预览态，点击返回编辑后回到编辑态", async ({ page }) => {
+test("点击预览后直接进入全屏预览态，点击返回编辑后回到编辑态", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.locator("body")).toHaveAttribute("data-view", "editor");
 
   await page.getByLabel("HTML 输入框").fill("<p>切换视图</p>");
   await page.getByRole("button", { name: "预览" }).click();
+  
+  // 断言进入全屏预览态
   await expect(page.locator("body")).toHaveAttribute("data-view", "preview");
+  await expect(page.locator(".preview-panel")).toHaveCSS("position", "fixed");
 
   await page.getByRole("button", { name: "返回编辑" }).click();
   await expect(page.locator("body")).toHaveAttribute("data-view", "editor");
+  await expect(page.locator(".preview-panel")).toHaveCSS("display", "none");
 });
 
 test("页面暴露 manifest、主题色和主屏幕引导文案", async ({ page }) => {
@@ -134,18 +138,4 @@ test("预览脚本可以在 iframe 内执行，但不能改写宿主页面标题
   await expect(page).toHaveTitle("HTML 预览器");
 });
 
-test("点击全屏后进入页面内全屏，再次点击后退出全屏", async ({ page }) => {
-  await page.goto("/");
 
-  await page.getByLabel("HTML 输入框").fill("<p>全屏预览</p>");
-  await page.getByRole("button", { name: "预览" }).click();
-
-  await page.getByRole("button", { name: "全屏" }).click();
-  await expect(page.locator("body")).toHaveAttribute("data-preview-mode", "fullscreen");
-  await expect(page.locator("#fullscreen-button")).toHaveText("退出全屏");
-  await expect(page.locator(".preview-panel")).toHaveCSS("position", "fixed");
-
-  await page.getByRole("button", { name: "退出全屏" }).click();
-  await expect(page.locator("body")).toHaveAttribute("data-preview-mode", "default");
-  await expect(page.locator("#fullscreen-button")).toHaveText("全屏");
-});
