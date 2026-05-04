@@ -49,8 +49,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  let currentBlobUrl = null;
+
   const renderPreview = () => {
-    previewFrame.srcdoc = input.value.trim() || emptyDoc;
+    const htmlContent = input.value.trim() || emptyDoc;
+    
+    // 清理旧的 Blob URL 避免内存泄漏
+    if (currentBlobUrl) {
+      URL.revokeObjectURL(currentBlobUrl);
+    }
+    
+    // 使用 Blob URL 替代 srcdoc，提升在部分手机浏览器上的兼容性
+    const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
+    currentBlobUrl = URL.createObjectURL(blob);
+    
+    previewFrame.src = currentBlobUrl;
     showPreview();
   };
 
@@ -58,7 +71,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const clearPreview = () => {
     input.value = "";
-    previewFrame.srcdoc = emptyDoc;
+    
+    if (currentBlobUrl) {
+      URL.revokeObjectURL(currentBlobUrl);
+      currentBlobUrl = null;
+    }
+    
+    const blob = new Blob([emptyDoc], { type: "text/html;charset=utf-8" });
+    currentBlobUrl = URL.createObjectURL(blob);
+    previewFrame.src = currentBlobUrl;
+    
     showEditor();
   };
 
@@ -74,7 +96,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  previewFrame.srcdoc = emptyDoc;
+  const blob = new Blob([emptyDoc], { type: "text/html;charset=utf-8" });
+  currentBlobUrl = URL.createObjectURL(blob);
+  previewFrame.src = currentBlobUrl;
   body.setAttribute("data-preview-mode", "default");
 });
 
